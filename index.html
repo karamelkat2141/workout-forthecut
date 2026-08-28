@@ -1,1224 +1,1086 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Workout</title>
+
     <meta name="apple-mobile-web-app-capable" content="yes">
+
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <meta name="apple-mobile-web-app-title" content="Workout">
+
     <link rel="manifest" href="manifest.json">
+
     <link rel="apple-touch-icon" href="apple-touch-icon.jpg">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
 
+
+
     <style>
+
         :root {
+
             /* PAYBACK Color Tokens (Red/Blue Swapped) */
+
             --bg-dark: #05070A;
+
             --card-bg: rgba(23, 26, 31, 0.88);
+
             --card-border: #2A3038;
+
             --crimson: #0069B1;                      /* Swapped: Electric Blue */
+
             --crimson-glow: rgba(0, 105, 177, 0.3);  /* Swapped: Blue Glow */
+
             --electric-blue: #8B0000;                 /* Swapped: Crimson Red */
+
             --blue-glow: rgba(139, 0, 0, 0.35);       /* Swapped: Crimson Glow */
+
             --bunny-pink: #FFC0CB;
+
             --pink-glow: rgba(255, 192, 203, 0.25);
+
             --text-main: #E2E8F0;
+
             --text-sub: #94A3B8;
 
+
+
             /* Poster Accurate Typography Tokens */
+
             --font-display: 'Montserrat', 'Arial Black', sans-serif;
+
             --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
         }
+
+
 
         * {
+
             box-sizing: border-box;
+
             margin: 0;
+
             padding: 0;
+
         }
+
+
 
         body {
+
             background-color: var(--bg-dark);
+
+            /* City skyline artwork as fixed background */
+
             background-image: url('background_no_title.png');
+
             background-size: cover;
+
             background-position: center top;
+
             background-repeat: no-repeat;
+
             background-attachment: fixed;
+
             color: var(--text-main);
+
             font-family: var(--font-body);
+
             line-height: 1.5;
+
             min-height: 100vh;
+
         }
+
+
 
         /* FULL-WIDTH SEAMLESS HEADER */
+
         .full-width-header {
+
             width: 100%;
+
             display: flex;
+
             justify-content: center;
+
             align-items: center;
+
             overflow: hidden;
+
             margin-bottom: 25px;
+
         }
+
+
 
         .full-width-header img {
+
             width: 100%;
+
             height: auto;
+
             display: block;
-            object-fit: cover;
+
+            object-fit: cover; /* Spans full screen width seamlessly */
+
         }
+
+
 
         /* CENTERED CONTENT WRAPPER */
+
         .app-container {
+
             max-width: 1100px;
+
             margin: 0 auto;
+
             padding: 0 15px 40px 15px;
+
         }
+
+
 
         /* MAIN ROUTINE TABS */
+
         .tab-navigation {
+
             display: flex;
+
             justify-content: center;
+
             gap: 15px;
+
             margin-bottom: 25px;
+
         }
+
+
 
         .tab-btn {
+
             background-color: var(--card-bg);
+
             backdrop-filter: blur(12px);
+
             -webkit-backdrop-filter: blur(12px);
+
             border: 1px solid var(--card-border);
+
             color: var(--text-sub);
+
             padding: 14px 24px;
+
             font-family: var(--font-display);
+
             font-size: 0.95rem;
+
             font-weight: 800;
+
             letter-spacing: 1.5px;
+
             text-transform: uppercase;
+
             cursor: pointer;
+
             border-radius: 6px;
+
             transition: all 0.3s ease;
+
             flex: 1;
+
             max-width: 450px;
+
         }
+
+
 
         .tab-btn:hover {
+
             border-color: var(--pink-glow);
+
             color: var(--bunny-pink);
+
             box-shadow: 0 0 12px var(--pink-glow);
+
         }
+
+
 
         .tab-btn.active {
+
             background: linear-gradient(135deg, rgba(54, 10, 10, 0.95) 0%, var(--card-bg) 100%);
+
             color: var(--text-main);
+
             border-color: var(--electric-blue);
+
             box-shadow: 0 0 15px var(--blue-glow);
+
         }
+
+
+
+        .tab-btn.active:hover {
+
+            border-color: var(--pink-glow);
+
+            color: var(--bunny-pink);
+
+            box-shadow: 0 0 15px var(--pink-glow);
+
+        }
+
+
 
         /* DAY SELECTOR TABS */
+
         .day-nav {
+
             display: flex;
+
             justify-content: space-between;
+
             gap: 8px;
-            margin-bottom: 15px;
+
+            margin-bottom: 25px;
+
             overflow-x: auto;
+
             padding-bottom: 5px;
+
         }
+
+
 
         .day-btn {
+
             background: var(--card-bg);
+
             backdrop-filter: blur(12px);
+
             -webkit-backdrop-filter: blur(12px);
+
             border: 1px solid var(--card-border);
+
             color: var(--text-sub);
+
             padding: 10px 16px;
+
             font-family: var(--font-display);
+
             font-size: 0.8rem;
+
             font-weight: 700;
+
             border-radius: 4px;
+
             cursor: pointer;
+
             white-space: nowrap;
+
             flex: 1;
+
             text-align: center;
+
             transition: all 0.2s ease;
+
         }
+
+
 
         .day-btn:hover {
+
             border-color: var(--pink-glow);
+
             color: var(--bunny-pink);
+
             box-shadow: 0 0 10px var(--pink-glow);
+
         }
+
+
 
         .day-btn.active {
+
             background: linear-gradient(135deg, rgba(54, 10, 10, 0.95) 0%, var(--card-bg) 100%);
+
             color: var(--text-main);
+
             border-color: var(--electric-blue);
+
             box-shadow: 0 0 12px var(--blue-glow);
+
         }
 
-        /* ROUTINE TIMER BANNER */
-        .routine-timer-card {
-            background: linear-gradient(135deg, rgba(54, 10, 10, 0.95) 0%, var(--card-bg) 100%);
 
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--blue-glow);
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
 
-        .routine-timer-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+        .day-btn.active:hover {
 
-        .routine-timer-title {
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--main-text);
-            text-transform: uppercase;
-        }
-
-        .routine-timer-stats {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-        }
-
-        .timer-display {
-            font-family: var(--font-display);
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: 1px;
-        }
-
-        /* ACTION BUTTON STYLES */
-        .btn-action {
-            background: var(--electric-blue);
-            color: var(--text-main);
-            border: none;
-            padding: 10px 18px;
-            font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-weight: 800;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-action:hover {
-            color: var(--bunny-pink);
-	    background: var(--card-bg);
-            border: 1px solid var(--pink-glow);
-            box-shadow: 0 0 12px var(--pink-glow);
-            opacity: 0.9;
-        }
-
-        .btn-action.active-timer {
-            background: #D97706;
-        }
-
-        .btn-action.stop-timer {
-            background: #DC2626;
-        }
-
-        .btn-secondary {
-            background: rgba(42, 48, 56, 0.8);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            padding: 6px 10px;
-            font-family: var(--font-display);
-            font-size: 0.7rem;
-            font-weight: 700;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .btn-secondary:hover {
             border-color: var(--pink-glow);
+
             color: var(--bunny-pink);
-        }
 
-        .btn-danger-sm {
-            background: rgba(220, 38, 38, 0.2);
-            border: 1px solid rgba(220, 38, 38, 0.5);
-            color: #F87171;
-            padding: 3px 8px;
-            font-size: 0.75rem;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+            box-shadow: 0 0 15px var(--pink-glow);
 
-        .btn-danger-sm:hover {
-            background: var(--pink-glow);
-            color: var(--text-main);
-            border-color: var(--pink-glow);
-            box-shadow: var(--pink-glow);
-        }
+        }        
+
+
 
         /* CONTENT DISPLAY & SIDE-BY-SIDE GRID */
+
         .routine-content { display: none; }
+
         .routine-content.active { display: block; }
+
         
+
         .day-content { display: none; }
+
         .day-content.active { 
+
             display: grid; 
+
             grid-template-columns: 1fr; 
+
             gap: 15px; 
+
         }
+
+
 
         @media (min-width: 850px) {
+
             .day-content.active {
+
                 grid-template-columns: repeat(2, 1fr);
+
             }
+
         }
+
+
 
         /* WORKOUT CARD LAYOUT */
+
         .exercise-card {
+
             background: var(--card-bg);
+
             backdrop-filter: blur(12px);
+
             -webkit-backdrop-filter: blur(12px);
+
             border: 1px solid var(--card-border);
+
             border-left: 4px solid var(--electric-blue);
+
             border-radius: 8px;
+
             padding: 18px;
+
             display: flex;
+
             flex-direction: column;
+
             justify-content: space-between;
+
             gap: 15px;
+
             height: 100%;
+
             transition: all 0.25s ease;
+
         }
+
+
 
         .exercise-card.full-width {
+
             grid-column: 1 / -1;
+
             flex-direction: column;
+
         }
+
+
 
         @media (min-width: 768px) {
+
             .exercise-card.full-width {
+
                 flex-direction: row;
+
                 align-items: center;
+
             }
+
         }
 
+
+
         .exercise-card:hover {
-            border-color: var(--card-border);
-            border-left-color: var(--electric-blue);
-            box-shadow: 0 0 15px var(--blue-glow);
+
+            border-color: var(--pink-glow);
+
+            border-left-color: var(--pink-glow);
+
+            box-shadow: 0 0 15px var(--pink-glow);
+
         }
+
+
 
         .exercise-info { flex: 1; }
 
+
+
         .block-tag {
+
             display: inline-block;
+
             background: var(--blue-glow);
+
             color: var(--electric-blue);
+
             font-family: var(--font-display);
+
             font-size: 0.7rem;
+
             font-weight: 800;
+
             letter-spacing: 1px;
+
             padding: 4px 8px;
+
             border-radius: 3px;
+
             margin-bottom: 8px;
+
             text-transform: uppercase;
+
             transition: all 0.25s ease;
+
         }
+
+
 
         .exercise-card:hover .block-tag {
-            color: var(--electric-blue);
-            background: var(--blue-glow);
+
+            color: var(--bunny-pink);
+
+            background: var(--pink-glow);
+
         }
+
+
 
         .block-tag.warmup, .block-tag.finisher {
+
             background: var(--crimson-glow);
+
             color: #0069B1;
+
             border: 1px solid rgba(0, 105, 177, 0.4);
+
         }
+
+
 
         .exercise-card:hover .block-tag.warmup,
+
         .exercise-card:hover .block-tag.finisher {
-            color: var(--crimson);
-            background: var(--crimson-glow);
-            border-color: var(--crimson-glow);
+
+            color: var(--bunny-pink);
+
+            background: var(--pink-glow);
+
+            border-color: var(--pink-glow);
+
         }
+
+
 
         .exercise-title {
+
             font-family: var(--font-display);
+
             font-size: 1.15rem;
+
             font-weight: 800;
+
             color: var(--text-main);
+
             margin-bottom: 4px;
+
             transition: color 0.25s ease;
+
         }
+
+
 
         .exercise-card:hover .exercise-title {
-            color: var(--text-main);
+
+            color: var(--bunny-pink);
+
         }
+
+
 
         .exercise-meta {
+
             color: var(--electric-blue);
+
             font-family: var(--font-display);
+
             font-weight: 700;
+
             font-size: 0.9rem;
+
             margin-bottom: 6px;
+
             transition: color 0.25s ease;
+
         }
+
+
 
         .exercise-card:hover .exercise-meta {
-            color: var(--electric-blue);
+
+            color: var(--pink-glow);
+
         }
+
+
 
         .exercise-notes {
+
             color: var(--text-sub);
+
             font-size: 0.85rem;
+
             font-style: italic;
-            margin-bottom: 8px;
+
         }
 
-        /* EXERCISE TRACKING STATS */
-        .exercise-stats-box {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px dashed var(--card-border);
-            border-radius: 4px;
-            padding: 8px 12px;
-            margin-top: 10px;
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
 
-        .exercise-stats-box div strong {
-            color: var(--text-main);
-        }
-
-        .stats-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .exercise-action-panel {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
 
         /* GIF DISPLAY AREA */
+
         .gif-container {
+
             width: 100%;
+
             max-width: 180px;
+
             height: 180px;
+
             background-color: #000;
+
             border: 1px solid var(--card-border);
+
             border-radius: 6px;
+
             overflow: hidden;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             align-self: center;
+
             flex-shrink: 0;
+
             position: relative;
+
             transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
         }
+
+
 
         .exercise-card:hover .gif-container {
-            border-color: var(--card-bg);
-            box-shadow: 0 0 10px var(--card-bg);
+
+            border-color: var(--pink-glow);
+
+            box-shadow: 0 0 10px var(--pink-glow);
+
         }
+
+
 
         .gif-container img {
+
             width: 100%;
+
             height: 100%;
+
             object-fit: contain;
+
             background-color: #000;
+
         }
+
+
 
         .gif-placeholder {
+
             color: var(--text-sub);
+
             font-family: var(--font-display);
+
             font-size: 0.7rem;
+
             font-weight: 700;
+
             text-align: center;
+
             padding: 10px;
+
             text-transform: uppercase;
+
             letter-spacing: 1px;
+
             transition: color 0.25s ease;
+
         }
+
+
 
         .exercise-card:hover .gif-placeholder {
+
             color: var(--bunny-pink);
+
         }
 
-        /* LOG SECTION */
-        .log-section {
-            margin-top: 35px;
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 20px;
-        }
-
-        .log-header-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .log-header {
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--text-main);
-            text-transform: uppercase;
-        }
-
-        .log-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-
-        .log-item {
-            background: rgba(0, 0, 0, 0.4);
-            border-left: 3px solid var(--crimson);
-            padding: 10px 14px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .log-item-details {
-            flex: 1;
-        }
-
-        /* MODAL STYLING */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(5, 7, 10, 0.85);
-            backdrop-filter: blur(8px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-card {
-            background: var(--card-bg);
-            border: 1px solid var(--electric-blue);
-            box-shadow: 0 0 20px var(--blue-glow);
-            border-radius: 8px;
-            padding: 24px;
-            width: 90%;
-            max-width: 440px;
-            max-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            overflow-y: auto;
-        }
-
-        .modal-title {
-            font-family: var(--font-display);
-            font-weight: 800;
-            color: var(--text-main);
-            font-size: 1.1rem;
-            text-transform: uppercase;
-        }
-
-        .modal-field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .modal-field label {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text-sub);
-            text-transform: uppercase;
-        }
-
-        .modal-field input, .modal-field textarea {
-            background: #000;
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            padding: 10px;
-            border-radius: 4px;
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-        }
-
-        .modal-field textarea {
-            resize: vertical;
-            min-height: 60px;
-        }
-
-        .modal-field input:focus, .modal-field textarea:focus {
-            outline: none;
-            border-color: var(--bunny-pink);
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        /* NOTES LIST MODAL SPECIFICS */
-        .notes-history-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 350px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-
-        .note-entry-card {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--card-border);
-            border-left: 3px solid var(--bunny-pink);
-            border-radius: 4px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .note-entry-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px dashed var(--card-border);
-            padding-bottom: 6px;
-            font-size: 0.75rem;
-            color: var(--text-sub);
-            font-weight: 700;
-        }
-
-        .note-entry-body {
-            font-size: 0.85rem;
-            color: var(--text-main);
-            white-space: pre-wrap;
-            margin-top: 4px;
-        }
     </style>
+
 </head>
+
 <body>
 
+
+
     <header class="full-width-header">
+
         <img src="header.png" alt="WORKOUT FOR THE CUT">
+
     </header>
 
+
+
     <main class="app-container">
+
         <div class="tab-navigation">
+
             <button class="tab-btn active" onclick="switchRoutine('routineA', this)">
+
                 SUN<br><small style="font-size:0.7rem; color: var(--text-sub);">[Two Baht Routine]</small>
+
             </button>
+
             <button class="tab-btn" onclick="switchRoutine('routineB', this)">
+
                 JAY<br><small style="font-size:0.7rem; color: var(--text-sub);">[Three Baht Routine]</small>
+
             </button>
+
         </div>
+
+
 
         <div id="routineA" class="routine-content active">
+
             <div class="day-nav">
+
                 <button class="day-btn active" onclick="switchDay('rA', 'day1', this)">DAY 1: LOWER (GLUTE/HAM)</button>
+
                 <button class="day-btn" onclick="switchDay('rA', 'day2', this)">DAY 2: UPPER (PUSH/PULL)</button>
+
                 <button class="day-btn" onclick="switchDay('rA', 'day3', this)">DAY 3: LOWER (QUAD/BALANCE)</button>
+
                 <button class="day-btn" onclick="switchDay('rA', 'day4', this)">DAY 4: UPPER (POSTURE/CORE)</button>
+
             </div>
 
-            <div class="routine-timer-card">
-                <div class="routine-timer-info">
-                    <div class="routine-timer-title">Routine Session Timer</div>
-                    <div class="routine-timer-stats" id="rA-avg-display">Average Routine Time: --:--</div>
-                </div>
-                <div class="timer-display" id="rA-routine-clock">00:00:00</div>
-                <button class="btn-action" id="rA-routine-toggle-btn" onclick="toggleRoutineTimer('rA')">Start Routine</button>
-            </div>
+
 
             <div id="rA-day1" class="day-content active"></div>
+
             <div id="rA-day2" class="day-content"></div>
+
             <div id="rA-day3" class="day-content"></div>
+
             <div id="rA-day4" class="day-content"></div>
+
         </div>
+
+
 
         <div id="routineB" class="routine-content">
+
             <div class="day-nav">
+
                 <button class="day-btn active" onclick="switchDay('rB', 'day1', this)">DAY 1: LOWER (GLUTE/HAM)</button>
+
                 <button class="day-btn" onclick="switchDay('rB', 'day2', this)">DAY 2: UPPER (PUSH/PULL)</button>
+
                 <button class="day-btn" onclick="switchDay('rB', 'day3', this)">DAY 3: LOWER (QUAD/BALANCE)</button>
+
                 <button class="day-btn" onclick="switchDay('rB', 'day4', this)">DAY 4: UPPER (POSTURE/CORE)</button>
+
             </div>
 
-            <div class="routine-timer-card">
-                <div class="routine-timer-info">
-                    <div class="routine-timer-title">Routine Session Timer</div>
-                    <div class="routine-timer-stats" id="rB-avg-display">Average Routine Time: --:--</div>
-                </div>
-                <div class="timer-display" id="rB-routine-clock">00:00:00</div>
-                <button class="btn-action" id="rB-routine-toggle-btn" onclick="toggleRoutineTimer('rB')">Start Routine</button>
-            </div>
+
 
             <div id="rB-day1" class="day-content active"></div>
+
             <div id="rB-day2" class="day-content"></div>
+
             <div id="rB-day3" class="day-content"></div>
+
             <div id="rB-day4" class="day-content"></div>
+
         </div>
 
-        <section class="log-section">
-            <div class="log-header-bar">
-                <div class="log-header">Completed Workout Log</div>
-                <button class="btn-secondary" onclick="clearAllLogs()">Clear All Logs</button>
-            </div>
-            <div class="log-list" id="activity-log-list">
-                <div class="log-item" style="color: var(--text-sub);">No exercises logged yet for this session.</div>
-            </div>
-        </section>
     </main>
 
-    <div class="modal-overlay" id="exercise-modal">
-        <div class="modal-card">
-            <div class="modal-title" id="modal-exercise-name">Log Exercise</div>
-            <div class="modal-field">
-                <label for="input-sets">Sets Completed</label>
-                <input type="number" id="input-sets" min="1" placeholder="e.g. 3">
-            </div>
-            <div class="modal-field">
-                <label for="input-reps">Reps Per Set</label>
-                <input type="text" id="input-reps" placeholder="e.g. 12 or 10-12">
-            </div>
-            <div class="modal-field">
-                <label for="input-weight">Weight Used (lbs/kg)</label>
-                <input type="text" id="input-weight" placeholder="e.g. 45 lbs">
-            </div>
-            <div class="modal-field">
-                <label for="input-user-notes">Notes / Performance</label>
-                <textarea id="input-user-notes" placeholder="e.g. Felt light, increase weight next time"></textarea>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-action" style="background: var(--card-border);" onclick="closeModal()">Cancel</button>
-                <button class="btn-action" onclick="saveExerciseMetrics()">Save Entry</button>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal-overlay" id="view-notes-modal">
-        <div class="modal-card">
-            <div class="modal-title" id="view-notes-title">Exercise Notes</div>
-            <div class="notes-history-list" id="view-notes-list"></div>
-            <div class="modal-actions">
-                <button class="btn-action" style="background: var(--card-border);" onclick="closeNotesModal()">Close</button>
-            </div>
-        </div>
-    </div>
 
     <script>
+
         const rawCSV = `Day,Block,Exercise,Sets,Reps / Duration,Target / Notes
+
 WEEK 1 & 2: ROUTINE A,,,
+
 Day 1: Lower (Glute & Hamstring Focus),Warm-Up,Incline Treadmill Walk + Hip CARs,1,5 Mins,Body Temp & Hip Mobility
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 1A,Barbell Hip Thrust,3,10 Reps,Glute Max Hypertrophy (Heavy)
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 1B,Cable Pull-Through,3,12 Reps,Posterior Hinge (No rest between A & B)
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 2A,Bulgarian Split Squat,3,10 Reps/Leg,Glute-biased (Torso slightly forward)
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 2B,Standing Abductor Machine,3,15 Reps,Glute Medius / Upper Shelf
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 3A,Lying Leg Curl,3,12 Reps,Hamstring Isolation
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 3B,Standing Calf Raise,2,15 Reps,Ankle & Calf Stability
+
 Day 1: Lower (Glute & Hamstring Focus),Finisher,Incline Treadmill Walk,1,7 Mins,Incline 6 / Speed 3.0
+
 ,,,,
+
 Day 2: Upper (Push/Pull + Arms & Core),Warm-Up,Incline Treadmill Walk + Forearm Wall Slides,1,5 Mins,Scapular Gliding & Shoulder Warm-Up
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 1A,Incline DB Press,3,12 Reps,Upper Chest (Shoulder-safe neutral grip)
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 1B,Seated Cable Row (Neutral Grip),3,12 Reps,Posture / Scapular Retraction
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 2A,Cable Face Pulls,3,15 Reps,Rear Delts & Shoulder Health
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 2B,Overhead Tricep Rope Extension,3,12 Reps,Tricep Toning & Long Head Stretch
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 3A,Incline DB Bicep Curls,3,12 Reps,Bicep Sculpting (Shoulder back)
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 3B,Cable Pallof Press,2,10 Reps/Side,Deep Transverse Abdominis (Waist Taper)
+
 Day 2: Upper (Push/Pull + Arms & Core),Finisher,Treadmill Walk or Light Jog,1,7 Mins,Aerobic Flush
+
 ,,,,
+
 Day 3: Lower (Quad & Single-Leg Focus),Warm-Up,Incline Treadmill Walk + Ankle/Hip Mobility,1,5 Mins,Lower Joint Prep
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 1A,Leg Press (High & Wide Stance),3,10 Reps,Glute-Biased Heavy Press
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 1B,Lying Leg Curl,3,12 Reps,Hamstring Isolation
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 2A,Walking DB Lunges,3,12 Steps/Leg,Dynamic Balance & Quad/Glute Drive
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 2B,Cable Glute Kickbacks,3,12 Reps/Leg,Glute Isolation
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 3A,Seated Abductor Machine,2,15 Reps,Hip Breadth & Glute Shelf
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 3B,Seated Calf Raise,2,15 Reps,Lower Leg Stability
+
 Day 3: Lower (Quad & Single-Leg Focus),Finisher,5-Min Run + 3-Min Incline Walk,1,8 Mins,Run: Incline 3 / Speed 6.0
+
 ,,,,
+
 Day 4: Upper (Posture + Arms + Core),Warm-Up,Incline Treadmill Walk + Shoulder CARs,1,5 Mins,Thoracic & Shoulder Mobilization
+
 Day 4: Upper (Posture + Arms + Core),Superset 1A,Chest-Supported DB Row,3,12 Reps,Mid-Back / Low-Back Friendly
+
 Day 4: Upper (Posture + Arms + Core),Superset 1B,High-Incline Neutral DB OHP,3,10 Reps,75-Degree Bench (Protect Right Shoulder)
+
 Day 4: Upper (Posture + Arms + Core),Superset 2A,Reverse Cable Flyes,3,15 Reps,Postural Rear Delts
+
 Day 4: Upper (Posture + Arms + Core),Superset 2B,DB Hammer Curls,3,12 Reps,Brachialis & Bicep Sculpting
+
 Day 4: Upper (Posture + Arms + Core),Superset 3A,Hanging Knee Raises,3,12 Reps,Lower Ab Sculpting
+
 Day 4: Upper (Posture + Arms + Core),Superset 3B,Side Planks,2,30 Sec/Side,Lateral Core Anti-Lateral Flexion
+
 Day 4: Upper (Posture + Arms + Core),Finisher,High-Incline Treadmill Walk,1,7 Mins,Incline 8 / Speed 3.2
+
 ,,,,
+
 WEEK 3 & 4: ROUTINE B (EXERCISE SWAPS),,,
+
 Day 1: Lower (Glute & Hamstring Focus),Warm-Up,Incline Treadmill Walk + Hip CARs,1,5 Mins,Body Temp & Hip Mobility
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 1A,Smith Machine / Pit Shark Hip Thrust,3,10 Reps,Fixed-Path Glute Drive
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 1B,Dumbbell RDLs,3,10 Reps,Hamstring Stretch & Hip Hinge
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 2A,Deficit Reverse Lunges,3,10 Reps/Leg,Glute Drive & Single-Leg Balance
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 2B,Single-Leg Cable Abductions,3,15 Reps/Side,Glute Medius Isolation
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 3A,Seated Leg Curl,3,12 Reps,Hamstring Isolation
+
 Day 1: Lower (Glute & Hamstring Focus),Superset 3B,Standing Calf Raise,2,15 Reps,Calf Support
+
 Day 1: Lower (Glute & Hamstring Focus),Finisher,Incline Treadmill Walk,1,7 Mins,Incline 6 / Speed 3.0
+
 ,,,,
+
 Day 2: Upper (Push/Pull + Arms & Core),Warm-Up,Incline Treadmill Walk + Forearm Wall Slides,1,5 Mins,Scapular Gliding
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 1A,Flat Neutral DB Press,3,12 Reps,Mid Chest (Shoulder-Safe)
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 1B,Lat Pulldown / Wide Cable Row,3,12 Reps,Lat & Back Posture
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 2A,Tricep Cable Pushdowns (Rope),3,15 Reps,Tricep Isolation
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 2B,Rear Delt DB Flyes,3,15 Reps,Posterior Shoulder Cap
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 3A,Standing Cable Bicep Curls,3,12 Reps,Continuous Tension Bicep Work
+
 Day 2: Upper (Push/Pull + Arms & Core),Superset 3B,DB Suitcase Carry,2,40 Sec/Side,Anti-Lateral Core & Grip Posture
+
 Day 2: Upper (Push/Pull + Arms & Core),Finisher,Treadmill Walk or Light Jog,1,7 Mins,Aerobic Flush
+
 ,,,,
+
 Day 3: Lower (Quad & Single-Leg Focus),Warm-Up,Incline Treadmill Walk + Mobility,1,5 Mins,Lower Body Prep
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 1A,Goblet Squats or Hack Squats,3,10 Reps,Quad & Core Strength
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 1B,Barbell / DB Romanian Deadlifts,3,10 Reps,Hamstring & Glute Lengthening
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 2A,Single-Leg Press,3,10 Reps/Leg,Unilateral Quad Drive
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 2B,Standing Glute Medius Kickbacks,3,12 Reps/Leg,Upper Glute Shelf
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 3A,Seated Abductor Machine,2,15 Reps,Hip Breadth
+
 Day 3: Lower (Quad & Single-Leg Focus),Superset 3B,Seated Calf Raise,2,15 Reps,Ankle Support
+
 Day 3: Lower (Quad & Single-Leg Focus),Finisher,5-Min Run + 3-Min Incline Walk,1,8 Mins,Run: Incline 3 / Speed 6.0
+
 ,,,,
+
 Day 4: Upper (Posture + Arms + Core),Warm-Up,Incline Treadmill Walk + Shoulder CARs,1,5 Mins,Thoracic & Shoulder Mobilization
+
 Day 4: Upper (Posture + Arms + Core),Superset 1A,Single-Arm Cable Row,3,12 Reps/Side,Scapular Gliding & Anti-Rotation
+
 Day 4: Upper (Posture + Arms + Core),Superset 1B,Landmine Press or Incline DB Press,3,10 Reps,Shoulder-Safe Overhead Plane
+
 Day 4: Upper (Posture + Arms + Core),Superset 2A,Cable Face Pulls,3,15 Reps,Rear Delts & Posture
+
 Day 4: Upper (Posture + Arms + Core),Superset 2B,EZ-Bar / DB Preacher Curls,3,12 Reps,Strict Bicep Isolation
+
 Day 4: Upper (Posture + Arms + Core),Superset 3A,Ab Wheel / Swiss Ball Rollouts,3,10 Reps,Deep Core Anti-Extension
+
 Day 4: Upper (Posture + Arms + Core),Superset 3B,Plank with Knee Tucks,2,45 Sec Hold,Lower Core Stability
+
 Day 4: Upper (Posture + Arms + Core),Finisher,High-Incline Treadmill Walk,1,7 Mins,Incline 8 / Speed 3.2`;
 
-        // STATE & LOCAL STORAGE DATA MANAGEMENT
-        let workoutLogs = JSON.parse(localStorage.getItem('workout_logs') || '[]');
-        let currentRoutineState = {
-            rA: { startTime: null, timerId: null, elapsed: 0 },
-            rB: { startTime: null, timerId: null, elapsed: 0 }
-        };
-        let activeExerciseTimers = {};
-        let activeModalExercise = null;
-        let activeViewNotesExercise = null;
 
-        function saveLogsToStorage() {
-            localStorage.setItem('workout_logs', JSON.stringify(workoutLogs));
-        }
-
-        function formatTime(seconds) {
-            const hrs = Math.floor(seconds / 3600);
-            const mins = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
-            if (hrs > 0) {
-                return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-            }
-            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-        }
-
-        // ROUTINE TIMER LOGIC
-        function toggleRoutineTimer(routineKey) {
-            const state = currentRoutineState[routineKey];
-            const btn = document.getElementById(`${routineKey}-routine-toggle-btn`);
-            const clock = document.getElementById(`${routineKey}-routine-clock`);
-
-            if (!state.timerId) {
-                state.startTime = Date.now() - (state.elapsed * 1000);
-                state.timerId = setInterval(() => {
-                    state.elapsed = Math.floor((Date.now() - state.startTime) / 1000);
-                    clock.innerText = formatTime(state.elapsed);
-                }, 1000);
-                btn.innerText = 'Stop Routine';
-                btn.classList.add('stop-timer');
-            } else {
-                clearInterval(state.timerId);
-                state.timerId = null;
-                btn.innerText = 'Start Routine';
-                btn.classList.remove('stop-timer');
-
-                if (state.elapsed > 0) {
-                    const activeDayBtn = document.querySelector(`#${routineKey === 'rA' ? 'routineA' : 'routineB'} .day-btn.active`);
-                    const dayLabel = activeDayBtn ? activeDayBtn.innerText : 'Routine Session';
-                    
-                    workoutLogs.push({
-                        id: Date.now() + Math.random(),
-                        type: 'routine',
-                        routineKey: routineKey,
-                        day: dayLabel,
-                        duration: state.elapsed,
-                        timestamp: new Date().toISOString()
-                    });
-                    saveLogsToStorage();
-                    updateAveragesDisplay();
-                    renderLogs();
-                }
-                state.elapsed = 0;
-                clock.innerText = '00:00:00';
-            }
-        }
-
-        // EXERCISE TIMER LOGIC
-        function toggleExerciseTimer(exerciseId, exerciseName, defaultSets, defaultReps) {
-            const btn = document.getElementById(`btn-ex-${exerciseId}`);
-            const display = document.getElementById(`clock-ex-${exerciseId}`);
-
-            if (!activeExerciseTimers[exerciseId]) {
-                activeExerciseTimers[exerciseId] = {
-                    startTime: Date.now(),
-                    elapsed: 0,
-                    timerId: setInterval(() => {
-                        activeExerciseTimers[exerciseId].elapsed = Math.floor((Date.now() - activeExerciseTimers[exerciseId].startTime) / 1000);
-                        display.innerText = formatTime(activeExerciseTimers[exerciseId].elapsed);
-                    }, 1000)
-                };
-                btn.innerText = 'Stop';
-                btn.classList.add('stop-timer');
-            } else {
-                clearInterval(activeExerciseTimers[exerciseId].timerId);
-                const duration = activeExerciseTimers[exerciseId].elapsed;
-                delete activeExerciseTimers[exerciseId];
-
-                btn.innerText = 'Start';
-                btn.classList.remove('stop-timer');
-                display.innerText = '00:00';
-
-                openModal(exerciseId, exerciseName, duration, defaultSets, defaultReps);
-            }
-        }
-
-        // INPUT MODAL HANDLERS
-        function openModal(id, name, duration, defaultSets, defaultReps) {
-            activeModalExercise = { id, name, duration };
-            document.getElementById('modal-exercise-name').innerText = `Log: ${name}`;
-            document.getElementById('input-sets').value = defaultSets || 3;
-            document.getElementById('input-reps').value = defaultReps || '';
-            document.getElementById('input-weight').value = '';
-            document.getElementById('input-user-notes').value = '';
-            document.getElementById('exercise-modal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            activeModalExercise = null;
-            document.getElementById('exercise-modal').style.display = 'none';
-        }
-
-        function saveExerciseMetrics() {
-            if (!activeModalExercise) return;
-
-            const sets = document.getElementById('input-sets').value || 0;
-            const reps = document.getElementById('input-reps').value || '0';
-            const weight = document.getElementById('input-weight').value || 'N/A';
-            const userNotes = document.getElementById('input-user-notes').value.trim();
-
-            const logEntry = {
-                id: Date.now() + Math.random(),
-                type: 'exercise',
-                exerciseId: activeModalExercise.id,
-                name: activeModalExercise.name,
-                duration: activeModalExercise.duration,
-                sets: sets,
-                reps: reps,
-                weight: weight,
-                notes: userNotes,
-                timestamp: new Date().toISOString()
-            };
-
-            workoutLogs.push(logEntry);
-            saveLogsToStorage();
-            updateExerciseCardStats(activeModalExercise.id, activeModalExercise.name);
-            renderLogs();
-            closeModal();
-        }
-
-        // VIEW NOTES MODAL & DELETION HANDLERS
-        function openNotesModal(exerciseId, exerciseName) {
-            activeViewNotesExercise = { id: exerciseId, name: exerciseName };
-            document.getElementById('view-notes-title').innerText = `Notes: ${exerciseName}`;
-            renderNotesList();
-            document.getElementById('view-notes-modal').style.display = 'flex';
-        }
-
-        function closeNotesModal() {
-            activeViewNotesExercise = null;
-            document.getElementById('view-notes-modal').style.display = 'none';
-        }
-
-        function renderNotesList() {
-            if (!activeViewNotesExercise) return;
-            const container = document.getElementById('view-notes-list');
-            
-            const exLogs = workoutLogs.filter(l => l.type === 'exercise' && l.name === activeViewNotesExercise.name && l.notes && l.notes.trim() !== '');
-
-            if (exLogs.length === 0) {
-                container.innerHTML = `<div style="font-size: 0.85rem; color: var(--text-sub); text-align: center; padding: 15px;">No saved notes for this exercise.</div>`;
-                return;
-            }
-
-            container.innerHTML = exLogs.slice().reverse().map(log => {
-                const dateFormatted = new Date(log.timestamp).toLocaleDateString([], {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-
-                return `
-                    <div class="note-entry-card">
-                        <div class="note-entry-header">
-                            <span>📅 ${dateFormatted}</span>
-                            <button class="btn-danger-sm" onclick="deleteSingleLog(${log.id})">Delete</button>
-                        </div>
-                        <div class="note-entry-body">${escapeHtml(log.notes)}</div>
-                        <div style="font-size: 0.75rem; color: var(--text-sub); font-weight: 600;">
-                            Performance: ${log.sets} sets × ${log.reps} @ ${log.weight} (${formatTime(log.duration)})
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        }
-
-        // DELETE FUNCTIONS
-        function deleteSingleLog(logId) {
-            workoutLogs = workoutLogs.filter(l => l.id !== logId);
-            saveLogsToStorage();
-            
-            if (activeViewNotesExercise) {
-                renderNotesList();
-                updateExerciseCardStats(activeViewNotesExercise.id, activeViewNotesExercise.name);
-            } else {
-                refreshAllExerciseCardStats();
-            }
-            
-            updateAveragesDisplay();
-            renderLogs();
-        }
-
-        function clearAllLogs() {
-            if (confirm('Are you sure you want to clear all logged entries? This cannot be undone.')) {
-                workoutLogs = [];
-                saveLogsToStorage();
-                refreshAllExerciseCardStats();
-                updateAveragesDisplay();
-                renderLogs();
-            }
-        }
-
-        function refreshAllExerciseCardStats() {
-            document.querySelectorAll('.exercise-card').forEach(card => {
-                const statsBox = card.querySelector('.exercise-stats-box');
-                if (statsBox) {
-                    const id = statsBox.id.replace('stats-ex-', '');
-                    const titleEl = card.querySelector('.exercise-title');
-                    if (titleEl) {
-                        updateExerciseCardStats(id, titleEl.innerText);
-                    }
-                }
-            });
-        }
-
-        // RENDER EXERCISE CARDS & CALCULATE HISTORICAL AVERAGES
-        function updateExerciseCardStats(exerciseId, exerciseName) {
-            const cardStatsContainer = document.getElementById(`stats-ex-${exerciseId}`);
-            if (!cardStatsContainer) return;
-
-            const exLogs = workoutLogs.filter(l => l.type === 'exercise' && l.name === exerciseName);
-            const safeExName = exerciseName.replace(/'/g, "\\'");
-
-            if (exLogs.length === 0) {
-                cardStatsContainer.innerHTML = `
-                    <div class="stats-header-row">
-                        <span><em>No saved logs yet</em></span>
-                        <button class="btn-secondary" onclick="openNotesModal('${exerciseId}', '${safeExName}')">View Notes</button>
-                    </div>`;
-                return;
-            }
-
-            const totalDuration = exLogs.reduce((acc, curr) => acc + curr.duration, 0);
-            const avgDuration = Math.round(totalDuration / exLogs.length);
-            const lastLog = exLogs[exLogs.length - 1];
-
-            cardStatsContainer.innerHTML = `
-                <div class="stats-header-row">
-                    <div><strong>Last Session:</strong> ${lastLog.sets} sets × ${lastLog.reps} @ ${lastLog.weight} (${formatTime(lastLog.duration)})</div>
-                    <button class="btn-secondary" onclick="openNotesModal('${exerciseId}', '${safeExName}')">View Notes</button>
-                </div>
-                <div><strong>Avg Time / Sets:</strong> ${formatTime(avgDuration)} total</div>
-            `;
-        }
-
-        function updateAveragesDisplay() {
-            ['rA', 'rB'].forEach(key => {
-                const logs = workoutLogs.filter(l => l.type === 'routine' && l.routineKey === key);
-                const avgDisplay = document.getElementById(`${key}-avg-display`);
-                if (logs.length > 0) {
-                    const avgSeconds = Math.round(logs.reduce((a, b) => a + b.duration, 0) / logs.length);
-                    avgDisplay.innerText = `Average Routine Time: ${formatTime(avgSeconds)}`;
-                } else {
-                    avgDisplay.innerText = `Average Routine Time: --:--`;
-                }
-            });
-        }
-
-        function renderLogs() {
-            const list = document.getElementById('activity-log-list');
-            if (workoutLogs.length === 0) {
-                list.innerHTML = `<div class="log-item" style="color: var(--text-sub);">No exercises logged yet for this session.</div>`;
-                return;
-            }
-
-            list.innerHTML = workoutLogs.slice().reverse().map(log => {
-                const dateStr = new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                if (log.type === 'routine') {
-                    return `
-                        <div class="log-item" style="border-left-color: var(--electric-blue);">
-                            <div class="log-item-details">
-                                <strong>${log.day} Routine Completed</strong><br>
-                                <small style="color: var(--text-sub);">${formatTime(log.duration)} | ${dateStr}</small>
-                            </div>
-                            <button class="btn-danger-sm" onclick="deleteSingleLog(${log.id})">✕</button>
-                        </div>
-                    `;
-                }
-                return `
-                    <div class="log-item">
-                        <div class="log-item-details">
-                            <strong>${log.name}</strong><br>
-                            <small style="color: var(--text-sub);">${log.sets} sets × ${log.reps} | ${log.weight} (${formatTime(log.duration)})</small>
-                            ${log.notes ? `<div style="font-size:0.75rem; color: var(--bunny-pink); margin-top: 2px;">Note: ${escapeHtml(log.notes)}</div>` : ''}
-                        </div>
-                        <button class="btn-danger-sm" onclick="deleteSingleLog(${log.id})">✕</button>
-                    </div>
-                `;
-            }).join('');
-        }
 
         function parseAndRender() {
+
             const lines = rawCSV.split('\n');
+
             let currentRoutine = 'rA';
 
+
+
             lines.forEach(line => {
+
                 if (line.includes('WEEK 1 & 2')) { currentRoutine = 'rA'; return; }
+
                 if (line.includes('WEEK 3 & 4')) { currentRoutine = 'rB'; return; }
 
+
+
                 const parts = line.split(',');
+
                 if (parts.length < 6 || !parts[0] || parts[0].startsWith('Day,') || parts[0].trim() === '') return;
 
+
+
                 const dayString = parts[0].trim();
+
                 let dayNum = '';
 
+
+
                 if (dayString.startsWith('Day 1')) dayNum = 'day1';
+
                 else if (dayString.startsWith('Day 2')) dayNum = 'day2';
+
                 else if (dayString.startsWith('Day 3')) dayNum = 'day3';
+
                 else if (dayString.startsWith('Day 4')) dayNum = 'day4';
+
+
 
                 const targetContainer = document.getElementById(`${currentRoutine}-${dayNum}`);
 
+
+
                 if (targetContainer) {
+
                     const block = parts[1].trim();
+
                     const exercise = parts[2].trim();
+
                     const sets = parts[3].trim();
+
                     const reps = parts[4].trim();
+
                     const notes = parts[5].trim();
 
-                    const exerciseId = `${currentRoutine}-${dayNum}-${exercise.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+
+
                     const gifFile = exercise.toLowerCase().replace(/[^a-z0-9]/g, '_') + '.gif';
+
                     const isSpecialBlock = block.toLowerCase().includes('warm') || block.toLowerCase().includes('finish');
+
                     
+
                     let cardClass = 'exercise-card';
+
                     if (isSpecialBlock) {
+
                         cardClass += ' full-width';
+
                     }
+
+
 
                     const blockClass = isSpecialBlock ? 'block-tag warmup' : 'block-tag';
 
-                    const card = document.createElement('div');
-                    card.className = cardClass;
-                    card.innerHTML = `
-                        <div class="exercise-info">
-                            <span class="${blockClass}">${block}</span>
-                            <div class="exercise-title">${exercise}</div>
-                            <div class="exercise-meta">${sets} Sets × ${reps}</div>
-                            <div class="exercise-notes">${notes}</div>
-                            
-                            <div class="exercise-action-panel">
-                                <button class="btn-action" id="btn-ex-${exerciseId}" onclick="toggleExerciseTimer('${exerciseId}', '${exercise.replace(/'/g, "\\'")}', '${sets}', '${reps}')">Start</button>
-                                <span class="timer-display" id="clock-ex-${exerciseId}" style="font-size: 1.1rem;">00:00</span>
-                            </div>
 
-                            <div class="exercise-stats-box" id="stats-ex-${exerciseId}"></div>
+
+                    const card = document.createElement('div');
+
+                    card.className = cardClass;
+
+                    card.innerHTML = `
+
+                        <div class="exercise-info">
+
+                            <span class="${blockClass}">${block}</span>
+
+                            <div class="exercise-title">${exercise}</div>
+
+                            <div class="exercise-meta">${sets} Sets × ${reps}</div>
+
+                            <div class="exercise-notes">${notes}</div>
+
                         </div>
+
                         <div class="gif-container">
+
                             <img src="gifs/${gifFile}" alt="${exercise} Form GIF" onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\\'gif-placeholder\\'>Form GIF Placeholder<br>(${gifFile})</div>';">
+
                         </div>
+
                     `;
+
                     targetContainer.appendChild(card);
-                    updateExerciseCardStats(exerciseId, exercise);
+
                 }
+
             });
 
-            updateAveragesDisplay();
-            renderLogs();
         }
+
+
 
         function switchRoutine(routineId, btn) {
+
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
             document.querySelectorAll('.routine-content').forEach(c => c.classList.remove('active'));
 
+
+
             btn.classList.add('active');
+
             document.getElementById(routineId).classList.add('active');
+
         }
+
+
 
         function switchDay(routinePrefix, dayId, btn) {
+
             const parent = document.getElementById(routinePrefix === 'rA' ? 'routineA' : 'routineB');
+
             parent.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+
             parent.querySelectorAll('.day-content').forEach(c => c.classList.remove('active'));
 
+
+
             btn.classList.add('active');
+
             document.getElementById(`${routinePrefix}-${dayId}`).classList.add('active');
+
         }
 
+
+
         document.addEventListener('DOMContentLoaded', parseAndRender);
+
     </script>
+
 <script>
+
     if ('serviceWorker' in navigator) {
+
         window.addEventListener('load', () => {
+
             navigator.serviceWorker.register('./sw.js')
+
                 .then((reg) => console.log('Offline Service Worker Registered!', reg))
+
                 .catch((err) => console.log('Service Worker Failed:', err));
+
         });
+
     }
+
 </script>
+
 </body>
-</html>
+
+</html> 
+
