@@ -1,0 +1,15 @@
+{
+  "name": "WORKOUT // FOR THE CUT",
+  "short_name": "PAYBACK",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#05070A",
+  "theme_color": "#05070A",
+  "icons": [
+    {
+      "src": "header.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ]
+}

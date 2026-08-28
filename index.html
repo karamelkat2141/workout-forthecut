@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORKOUT // FOR THE CUT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* PAYBACK Color Tokens (Red/Blue Swapped) */
+            --bg-dark: #05070A;
+            --card-bg: rgba(23, 26, 31, 0.88);
+            --card-border: #2A3038;
+            --crimson: #0069B1;                      /* Swapped: Electric Blue */
+            --crimson-glow: rgba(0, 105, 177, 0.3);  /* Swapped: Blue Glow */
+            --electric-blue: #8B0000;                 /* Swapped: Crimson Red */
+            --blue-glow: rgba(139, 0, 0, 0.35);       /* Swapped: Crimson Glow */
+            --bunny-pink: #FFC0CB;
+            --pink-glow: rgba(255, 192, 203, 0.25);
+            --text-main: #E2E8F0;
+            --text-sub: #94A3B8;
+
+            /* Poster Accurate Typography Tokens */
+            --font-display: 'Montserrat', 'Arial Black', sans-serif;
+            --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            /* City skyline artwork as fixed background */
+            background-image: url('background_no_title.png');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* FULL-WIDTH SEAMLESS HEADER */
+        .full-width-header {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .full-width-header img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover; /* Spans full screen width seamlessly */
+        }
+
+        /* CENTERED CONTENT WRAPPER */
+        .app-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 15px 40px 15px;
+        }
+
+        /* MAIN ROUTINE TABS */
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            color: var(--text-sub);
+            padding: 14px 24px;
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 450px;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--pink-glow);
+            color: var(--bunny-pink);
+            box-shadow: 0 0 12px var(--pink-glow);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(54, 10, 10, 0.95) 0%, var(--card-bg) 100%);
+            color: var(--text-main);
+            border-color: var(--electric-blue);
+            box-shadow: 0 0 15px var(--blue-glow);
+        }
+
+        .tab-btn.active:hover {
+            border-color: var(--pink-glow);
+            color: var(--bunny-pink);
+            box-shadow: 0 0 15px var(--pink-glow);
+        }
+
+        /* DAY SELECTOR TABS */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .day-btn {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            color: var(--text-sub);
+            padding: 10px 16px;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+            flex: 1;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .day-btn:hover {
+            border-color: var(--pink-glow);
+            color: var(--bunny-pink);
+            box-shadow: 0 0 10px var(--pink-glow);
+        }
+
+        .day-btn.active {
+            background: linear-gradient(135deg, rgba(54, 10, 10, 0.95) 0%, var(--card-bg) 100%);
+            color: var(--text-main);
+            border-color: var(--electric-blue);
+            box-shadow: 0 0 12px var(--blue-glow);
+        }
+
+        .day-btn.active:hover {
+            border-color: var(--pink-glow);
+            color: var(--bunny-pink);
+            box-shadow: 0 0 15px var(--pink-glow);
+        }        
+
+        /* CONTENT DISPLAY & SIDE-BY-SIDE GRID */
+        .routine-content { display: none; }
+        .routine-content.active { display: block; }
+        
+        .day-content { display: none; }
+        .day-content.active { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 15px; 
+        }
+
+        @media (min-width: 850px) {
+            .day-content.active {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* WORKOUT CARD LAYOUT */
+        .exercise-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-left: 4px solid var(--electric-blue);
+            border-radius: 8px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 15px;
+            height: 100%;
+            transition: all 0.25s ease;
+        }
+
+        .exercise-card.full-width {
+            grid-column: 1 / -1;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .exercise-card.full-width {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .exercise-card:hover {
+            border-color: var(--pink-glow);
+            border-left-color: var(--pink-glow);
+            box-shadow: 0 0 15px var(--pink-glow);
+        }
+
+        .exercise-info { flex: 1; }
+
+        .block-tag {
+            display: inline-block;
+            background: var(--blue-glow);
+            color: var(--electric-blue);
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            padding: 4px 8px;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+        }
+
+        .exercise-card:hover .block-tag {
+            color: var(--bunny-pink);
+            background: var(--pink-glow);
+        }
+
+        .block-tag.warmup, .block-tag.finisher {
+            background: var(--crimson-glow);
+            color: #0069B1;
+            border: 1px solid rgba(0, 105, 177, 0.4);
+        }
+
+        .exercise-card:hover .block-tag.warmup,
+        .exercise-card:hover .block-tag.finisher {
+            color: var(--bunny-pink);
+            background: var(--pink-glow);
+            border-color: var(--pink-glow);
+        }
+
+        .exercise-title {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            transition: color 0.25s ease;
+        }
+
+        .exercise-card:hover .exercise-title {
+            color: var(--bunny-pink);
+        }
+
+        .exercise-meta {
+            color: var(--electric-blue);
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            transition: color 0.25s ease;
+        }
+
+        .exercise-card:hover .exercise-meta {
+            color: var(--pink-glow);
+        }
+
+        .exercise-notes {
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        /* GIF DISPLAY AREA */
+        .gif-container {
+            width: 100%;
+            max-width: 180px;
+            height: 180px;
+            background-color: #000;
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+            flex-shrink: 0;
+            position: relative;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .exercise-card:hover .gif-container {
+            border-color: var(--pink-glow);
+            box-shadow: 0 0 10px var(--pink-glow);
+        }
+
+        .gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: #000;
+        }
+
+        .gif-placeholder {
+            color: var(--text-sub);
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.25s ease;
+        }
+
+        .exercise-card:hover .gif-placeholder {
+            color: var(--bunny-pink);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="full-width-header">
+        <img src="header.png" alt="WORKOUT FOR THE CUT">
+    </header>
+
+    <main class="app-container">
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="switchRoutine('routineA', this)">
+                SUN<br><small style="font-size:0.7rem; color: var(--text-sub);">[Two Baht Routine]</small>
+            </button>
+            <button class="tab-btn" onclick="switchRoutine('routineB', this)">
+                JAY<br><small style="font-size:0.7rem; color: var(--text-sub);">[Three Baht Routine]</small>
+            </button>
+        </div>
+
+        <div id="routineA" class="routine-content active">
+            <div class="day-nav">
+                <button class="day-btn active" onclick="switchDay('rA', 'day1', this)">DAY 1: LOWER (GLUTE/HAM)</button>
+                <button class="day-btn" onclick="switchDay('rA', 'day2', this)">DAY 2: UPPER (PUSH/PULL)</button>
+                <button class="day-btn" onclick="switchDay('rA', 'day3', this)">DAY 3: LOWER (QUAD/BALANCE)</button>
+                <button class="day-btn" onclick="switchDay('rA', 'day4', this)">DAY 4: UPPER (POSTURE/CORE)</button>
+            </div>
+
+            <div id="rA-day1" class="day-content active"></div>
+            <div id="rA-day2" class="day-content"></div>
+            <div id="rA-day3" class="day-content"></div>
+            <div id="rA-day4" class="day-content"></div>
+        </div>
+
+        <div id="routineB" class="routine-content">
+            <div class="day-nav">
+                <button class="day-btn active" onclick="switchDay('rB', 'day1', this)">DAY 1: LOWER (GLUTE/HAM)</button>
+                <button class="day-btn" onclick="switchDay('rB', 'day2', this)">DAY 2: UPPER (PUSH/PULL)</button>
+                <button class="day-btn" onclick="switchDay('rB', 'day3', this)">DAY 3: LOWER (QUAD/BALANCE)</button>
+                <button class="day-btn" onclick="switchDay('rB', 'day4', this)">DAY 4: UPPER (POSTURE/CORE)</button>
+            </div>
+
+            <div id="rB-day1" class="day-content active"></div>
+            <div id="rB-day2" class="day-content"></div>
+            <div id="rB-day3" class="day-content"></div>
+            <div id="rB-day4" class="day-content"></div>
+        </div>
+    </main>
+
+    <script>
+        const rawCSV = `Day,Block,Exercise,Sets,Reps / Duration,Target / Notes
+WEEK 1 & 2: ROUTINE A,,,
+Day 1: Lower (Glute & Hamstring Focus),Warm-Up,Incline Treadmill Walk + Hip CARs,1,5 Mins,Body Temp & Hip Mobility
+Day 1: Lower (Glute & Hamstring Focus),Superset 1A,Barbell Hip Thrust,3,10 Reps,Glute Max Hypertrophy (Heavy)
+Day 1: Lower (Glute & Hamstring Focus),Superset 1B,Cable Pull-Through,3,12 Reps,Posterior Hinge (No rest between A & B)
+Day 1: Lower (Glute & Hamstring Focus),Superset 2A,Bulgarian Split Squat,3,10 Reps/Leg,Glute-biased (Torso slightly forward)
+Day 1: Lower (Glute & Hamstring Focus),Superset 2B,Standing Abductor Machine,3,15 Reps,Glute Medius / Upper Shelf
+Day 1: Lower (Glute & Hamstring Focus),Superset 3A,Lying Leg Curl,3,12 Reps,Hamstring Isolation
+Day 1: Lower (Glute & Hamstring Focus),Superset 3B,Standing Calf Raise,2,15 Reps,Ankle & Calf Stability
+Day 1: Lower (Glute & Hamstring Focus),Finisher,Incline Treadmill Walk,1,7 Mins,Incline 6 / Speed 3.0
+,,,,
+Day 2: Upper (Push/Pull + Arms & Core),Warm-Up,Incline Treadmill Walk + Forearm Wall Slides,1,5 Mins,Scapular Gliding & Shoulder Warm-Up
+Day 2: Upper (Push/Pull + Arms & Core),Superset 1A,Incline DB Press,3,12 Reps,Upper Chest (Shoulder-safe neutral grip)
+Day 2: Upper (Push/Pull + Arms & Core),Superset 1B,Seated Cable Row (Neutral Grip),3,12 Reps,Posture / Scapular Retraction
+Day 2: Upper (Push/Pull + Arms & Core),Superset 2A,Cable Face Pulls,3,15 Reps,Rear Delts & Shoulder Health
+Day 2: Upper (Push/Pull + Arms & Core),Superset 2B,Overhead Tricep Rope Extension,3,12 Reps,Tricep Toning & Long Head Stretch
+Day 2: Upper (Push/Pull + Arms & Core),Superset 3A,Incline DB Bicep Curls,3,12 Reps,Bicep Sculpting (Shoulder back)
+Day 2: Upper (Push/Pull + Arms & Core),Superset 3B,Cable Pallof Press,2,10 Reps/Side,Deep Transverse Abdominis (Waist Taper)
+Day 2: Upper (Push/Pull + Arms & Core),Finisher,Treadmill Walk or Light Jog,1,7 Mins,Aerobic Flush
+,,,,
+Day 3: Lower (Quad & Single-Leg Focus),Warm-Up,Incline Treadmill Walk + Ankle/Hip Mobility,1,5 Mins,Lower Joint Prep
+Day 3: Lower (Quad & Single-Leg Focus),Superset 1A,Leg Press (High & Wide Stance),3,10 Reps,Glute-Biased Heavy Press
+Day 3: Lower (Quad & Single-Leg Focus),Superset 1B,Lying Leg Curl,3,12 Reps,Hamstring Isolation
+Day 3: Lower (Quad & Single-Leg Focus),Superset 2A,Walking DB Lunges,3,12 Steps/Leg,Dynamic Balance & Quad/Glute Drive
+Day 3: Lower (Quad & Single-Leg Focus),Superset 2B,Cable Glute Kickbacks,3,12 Reps/Leg,Glute Isolation
+Day 3: Lower (Quad & Single-Leg Focus),Superset 3A,Seated Abductor Machine,2,15 Reps,Hip Breadth & Glute Shelf
+Day 3: Lower (Quad & Single-Leg Focus),Superset 3B,Seated Calf Raise,2,15 Reps,Lower Leg Stability
+Day 3: Lower (Quad & Single-Leg Focus),Finisher,5-Min Run + 3-Min Incline Walk,1,8 Mins,Run: Incline 3 / Speed 6.0
+,,,,
+Day 4: Upper (Posture + Arms + Core),Warm-Up,Incline Treadmill Walk + Shoulder CARs,1,5 Mins,Thoracic & Shoulder Mobilization
+Day 4: Upper (Posture + Arms + Core),Superset 1A,Chest-Supported DB Row,3,12 Reps,Mid-Back / Low-Back Friendly
+Day 4: Upper (Posture + Arms + Core),Superset 1B,High-Incline Neutral DB OHP,3,10 Reps,75-Degree Bench (Protect Right Shoulder)
+Day 4: Upper (Posture + Arms + Core),Superset 2A,Reverse Cable Flyes,3,15 Reps,Postural Rear Delts
+Day 4: Upper (Posture + Arms + Core),Superset 2B,DB Hammer Curls,3,12 Reps,Brachialis & Bicep Sculpting
+Day 4: Upper (Posture + Arms + Core),Superset 3A,Hanging Knee Raises,3,12 Reps,Lower Ab Sculpting
+Day 4: Upper (Posture + Arms + Core),Superset 3B,Side Planks,2,30 Sec/Side,Lateral Core Anti-Lateral Flexion
+Day 4: Upper (Posture + Arms + Core),Finisher,High-Incline Treadmill Walk,1,7 Mins,Incline 8 / Speed 3.2
+,,,,
+WEEK 3 & 4: ROUTINE B (EXERCISE SWAPS),,,
+Day 1: Lower (Glute & Hamstring Focus),Warm-Up,Incline Treadmill Walk + Hip CARs,1,5 Mins,Body Temp & Hip Mobility
+Day 1: Lower (Glute & Hamstring Focus),Superset 1A,Smith Machine / Pit Shark Hip Thrust,3,10 Reps,Fixed-Path Glute Drive
+Day 1: Lower (Glute & Hamstring Focus),Superset 1B,Dumbbell RDLs,3,10 Reps,Hamstring Stretch & Hip Hinge
+Day 1: Lower (Glute & Hamstring Focus),Superset 2A,Deficit Reverse Lunges,3,10 Reps/Leg,Glute Drive & Single-Leg Balance
+Day 1: Lower (Glute & Hamstring Focus),Superset 2B,Single-Leg Cable Abductions,3,15 Reps/Side,Glute Medius Isolation
+Day 1: Lower (Glute & Hamstring Focus),Superset 3A,Seated Leg Curl,3,12 Reps,Hamstring Isolation
+Day 1: Lower (Glute & Hamstring Focus),Superset 3B,Standing Calf Raise,2,15 Reps,Calf Support
+Day 1: Lower (Glute & Hamstring Focus),Finisher,Incline Treadmill Walk,1,7 Mins,Incline 6 / Speed 3.0
+,,,,
+Day 2: Upper (Push/Pull + Arms & Core),Warm-Up,Incline Treadmill Walk + Forearm Wall Slides,1,5 Mins,Scapular Gliding
+Day 2: Upper (Push/Pull + Arms & Core),Superset 1A,Flat Neutral DB Press,3,12 Reps,Mid Chest (Shoulder-Safe)
+Day 2: Upper (Push/Pull + Arms & Core),Superset 1B,Lat Pulldown / Wide Cable Row,3,12 Reps,Lat & Back Posture
+Day 2: Upper (Push/Pull + Arms & Core),Superset 2A,Tricep Cable Pushdowns (Rope),3,15 Reps,Tricep Isolation
+Day 2: Upper (Push/Pull + Arms & Core),Superset 2B,Rear Delt DB Flyes,3,15 Reps,Posterior Shoulder Cap
+Day 2: Upper (Push/Pull + Arms & Core),Superset 3A,Standing Cable Bicep Curls,3,12 Reps,Continuous Tension Bicep Work
+Day 2: Upper (Push/Pull + Arms & Core),Superset 3B,DB Suitcase Carry,2,40 Sec/Side,Anti-Lateral Core & Grip Posture
+Day 2: Upper (Push/Pull + Arms & Core),Finisher,Treadmill Walk or Light Jog,1,7 Mins,Aerobic Flush
+,,,,
+Day 3: Lower (Quad & Single-Leg Focus),Warm-Up,Incline Treadmill Walk + Mobility,1,5 Mins,Lower Body Prep
+Day 3: Lower (Quad & Single-Leg Focus),Superset 1A,Goblet Squats or Hack Squats,3,10 Reps,Quad & Core Strength
+Day 3: Lower (Quad & Single-Leg Focus),Superset 1B,Barbell / DB Romanian Deadlifts,3,10 Reps,Hamstring & Glute Lengthening
+Day 3: Lower (Quad & Single-Leg Focus),Superset 2A,Single-Leg Press,3,10 Reps/Leg,Unilateral Quad Drive
+Day 3: Lower (Quad & Single-Leg Focus),Superset 2B,Standing Glute Medius Kickbacks,3,12 Reps/Leg,Upper Glute Shelf
+Day 3: Lower (Quad & Single-Leg Focus),Superset 3A,Seated Abductor Machine,2,15 Reps,Hip Breadth
+Day 3: Lower (Quad & Single-Leg Focus),Superset 3B,Seated Calf Raise,2,15 Reps,Ankle Support
+Day 3: Lower (Quad & Single-Leg Focus),Finisher,5-Min Run + 3-Min Incline Walk,1,8 Mins,Run: Incline 3 / Speed 6.0
+,,,,
+Day 4: Upper (Posture + Arms + Core),Warm-Up,Incline Treadmill Walk + Shoulder CARs,1,5 Mins,Thoracic & Shoulder Mobilization
+Day 4: Upper (Posture + Arms + Core),Superset 1A,Single-Arm Cable Row,3,12 Reps/Side,Scapular Gliding & Anti-Rotation
+Day 4: Upper (Posture + Arms + Core),Superset 1B,Landmine Press or Incline DB Press,3,10 Reps,Shoulder-Safe Overhead Plane
+Day 4: Upper (Posture + Arms + Core),Superset 2A,Cable Face Pulls,3,15 Reps,Rear Delts & Posture
+Day 4: Upper (Posture + Arms + Core),Superset 2B,EZ-Bar / DB Preacher Curls,3,12 Reps,Strict Bicep Isolation
+Day 4: Upper (Posture + Arms + Core),Superset 3A,Ab Wheel / Swiss Ball Rollouts,3,10 Reps,Deep Core Anti-Extension
+Day 4: Upper (Posture + Arms + Core),Superset 3B,Plank with Knee Tucks,2,45 Sec Hold,Lower Core Stability
+Day 4: Upper (Posture + Arms + Core),Finisher,High-Incline Treadmill Walk,1,7 Mins,Incline 8 / Speed 3.2`;
+
+        function parseAndRender() {
+            const lines = rawCSV.split('\n');
+            let currentRoutine = 'rA';
+
+            lines.forEach(line => {
+                if (line.includes('WEEK 1 & 2')) { currentRoutine = 'rA'; return; }
+                if (line.includes('WEEK 3 & 4')) { currentRoutine = 'rB'; return; }
+
+                const parts = line.split(',');
+                if (parts.length < 6 || !parts[0] || parts[0].startsWith('Day,') || parts[0].trim() === '') return;
+
+                const dayString = parts[0].trim();
+                let dayNum = '';
+
+                if (dayString.startsWith('Day 1')) dayNum = 'day1';
+                else if (dayString.startsWith('Day 2')) dayNum = 'day2';
+                else if (dayString.startsWith('Day 3')) dayNum = 'day3';
+                else if (dayString.startsWith('Day 4')) dayNum = 'day4';
+
+                const targetContainer = document.getElementById(`${currentRoutine}-${dayNum}`);
+
+                if (targetContainer) {
+                    const block = parts[1].trim();
+                    const exercise = parts[2].trim();
+                    const sets = parts[3].trim();
+                    const reps = parts[4].trim();
+                    const notes = parts[5].trim();
+
+                    const gifFile = exercise.toLowerCase().replace(/[^a-z0-9]/g, '_') + '.gif';
+                    const isSpecialBlock = block.toLowerCase().includes('warm') || block.toLowerCase().includes('finish');
+                    
+                    let cardClass = 'exercise-card';
+                    if (isSpecialBlock) {
+                        cardClass += ' full-width';
+                    }
+
+                    const blockClass = isSpecialBlock ? 'block-tag warmup' : 'block-tag';
+
+                    const card = document.createElement('div');
+                    card.className = cardClass;
+                    card.innerHTML = `
+                        <div class="exercise-info">
+                            <span class="${blockClass}">${block}</span>
+                            <div class="exercise-title">${exercise}</div>
+                            <div class="exercise-meta">${sets} Sets × ${reps}</div>
+                            <div class="exercise-notes">${notes}</div>
+                        </div>
+                        <div class="gif-container">
+                            <img src="gifs/${gifFile}" alt="${exercise} Form GIF" onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\\'gif-placeholder\\'>Form GIF Placeholder<br>(${gifFile})</div>';">
+                        </div>
+                    `;
+                    targetContainer.appendChild(card);
+                }
+            });
+        }
+
+        function switchRoutine(routineId, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.routine-content').forEach(c => c.classList.remove('active'));
+
+            btn.classList.add('active');
+            document.getElementById(routineId).classList.add('active');
+        }
+
+        function switchDay(routinePrefix, dayId, btn) {
+            const parent = document.getElementById(routinePrefix === 'rA' ? 'routineA' : 'routineB');
+            parent.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+            parent.querySelectorAll('.day-content').forEach(c => c.classList.remove('active'));
+
+            btn.classList.add('active');
+            document.getElementById(`${routinePrefix}-${dayId}`).classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', parseAndRender);
+    </script>
+</body>
+</html>
