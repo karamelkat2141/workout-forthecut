@@ -4,7 +4,7 @@ Day 1: Lower (Glute & Hamstring Focus),Warm-Up,Incline Treadmill Walk + Hip CARs
 Day 1: Lower (Glute & Hamstring Focus),Superset 1A,Barbell Hip Thrust,3,10 Reps,Glute Max Hypertrophy (Heavy)
 Day 1: Lower (Glute & Hamstring Focus),Superset 1B,Dumbbell RDLs,3,10 Reps,Hamstring Stretch & Hip Hinge
 Day 1: Lower (Glute & Hamstring Focus),Exercise 2,Bulgarian Split Squat,3,10 Reps/Leg,Glute-biased (Torso slightly forward)
-Day 1: Lower (Glute & Hamstring Focus),Exercise 3,Cable Hip Abduction,3,15 Reps,Glute Medius / Upper Shelf
+Day 1: Lower (Glute & Hamstring Focus),Exercise 3,Single-Leg Cable Abductions,3,15 Reps/Side,Glute Medius Isolation
 Day 1: Lower (Glute & Hamstring Focus),Superset 4A,Seated Leg Curl,3,12 Reps,Hamstring Isolation
 Day 1: Lower (Glute & Hamstring Focus),Superset 4B,Standing Calf Raise,2,15 Reps,Ankle & Calf Stability
 Day 1: Lower (Glute & Hamstring Focus),Cool-Down,Incline Treadmill Walk,1,7 Mins,Incline 6 / Speed 3.0
