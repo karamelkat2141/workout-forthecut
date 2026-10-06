@@ -10,6 +10,9 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="apple-touch-icon.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- TikTok Embed Script -->
+    <script async src="https://www.tiktok.com/embed.js"></script>
 
     <style>
         :root {
@@ -39,7 +42,6 @@
 
         body {
             background-color: var(--bg-dark);
-            /* City skyline artwork as fixed background */
             background-image: url('background_no_title.png');
             background-size: cover;
             background-position: center top;
@@ -65,7 +67,7 @@
             width: 100%;
             height: auto;
             display: block;
-            object-fit: cover; /* Spans full screen width seamlessly */
+            object-fit: cover;
         }
 
         /* CENTERED CONTENT WRAPPER */
@@ -103,21 +105,13 @@
         }
 
         .tab-btn:hover {
-            background: linear-gradient(135deg, rgba(255, 192, 203, 0.25) 0%, var(--card-bg) 100%);
             color: var(--bunny-pink);
-            border-color: 2.5px var(--pink-glow);
+            border-color: var(--pink-glow);
             box-shadow: 0 0 12px var(--pink-glow);
             background: var(--pink-glow);
         }
 
         .tab-btn.active {
-            background: linear-gradient(135deg, rgba(54, 10, 10, 0.95) 0%, var(--card-bg) 100%);
-            color: var(--text-main);
-            border-color: var(--electric-blue);
-            box-shadow: 0 0 15px var(--blue-glow);
-        }
-
-        .tab-btn.active:hover {
             background: linear-gradient(135deg, rgba(54, 10, 10, 0.95) 0%, var(--card-bg) 100%);
             color: var(--text-main);
             border-color: var(--electric-blue);
@@ -165,13 +159,7 @@
             box-shadow: 0 0 12px var(--blue-glow);
         }
 
-        .day-btn.active:hover {
-            border-color: var(--electric-blue);
-            color: var(--text-main);
-            box-shadow: 0 0 15px var(--electric-blue);
-        }        
-
-        /* CONTENT DISPLAY & SIDE-BY-SIDE GRID */
+        /* CONTENT DISPLAY & GRID */
         .routine-content { display: none; }
         .routine-content.active { display: block; }
         
@@ -212,17 +200,9 @@
             flex-direction: column;
         }
 
-        @media (min-width: 768px) {
-            .exercise-card.full-width {
-                flex-direction: row;
-                align-items: center;
-            }
-        }
-
         .exercise-card:hover {
             border-color: var(--pink-glow);
             border-left-color: var(--bunny-pink);
-            box-shadow: 0 0 0px var(--pink-glow);
         }
 
         .exercise-info { 
@@ -252,19 +232,6 @@
             border: 1px solid var(--blue-glow);
         }
 
-        .exercise-card:hover .block-tag.warmup,
-        .exercise-card:hover .block-tag.finisher {
-            color: var(--bunny-pink);
-            background: var(--pink-glow);
-            border: 1px solid var(--pink-glow);
-        }
-
-        .exercise-card:hover .block-tag {
-            color: var(--bunny-pink);
-            background: var(--pink-glow);
-            border: 2.5px solid var(--pink-glow);
-        }
-
         .exercise-title {
             font-family: var(--font-display);
             font-size: 1.15rem;
@@ -290,10 +257,6 @@
             color: var(--bunny-pink);
         }
 
-        .exercise-card:hover .exercise-title {
-            color: var(--text-main);
-        }
-
         .exercise-meta {
             color: var(--electric-blue);
             font-family: var(--font-display);
@@ -303,24 +266,20 @@
             transition: color 0.25s ease;
         }
 
-        .exercise-card:hover .exercise-meta {
-            color: var(--bunny-pink);
-        }
-
         .exercise-notes {
             color: var(--text-sub);
             font-size: 0.85rem;
             font-style: italic;
         }
 
-        /* GIF DISPLAY AREA (COLLAPSED BY DEFAULT) */
-        .gif-container {
+        /* TIKTOK EMBED DISPLAY CONTAINER */
+        .media-container {
             width: 100%;
-            max-width: 180px;
-            height: 180px;
+            max-width: 320px;
+            min-height: 480px;
             background-color: #000;
             border: 1px solid var(--card-border);
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
             display: none; /* Collapsed state */
             align-items: center;
@@ -328,39 +287,32 @@
             align-self: center;
             flex-shrink: 0;
             position: relative;
-            margin-top: 10px;
+            margin-top: 15px;
             transition: border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
-        .exercise-card.expanded .gif-container {
+        .exercise-card.expanded .media-container {
             display: flex; /* Expanded state */
         }
 
-        .exercise-card:hover .gif-container {
-            border-color: var(--card-border);
+        /* Adjustments for embedded iframe/blockquote scale */
+        .media-container blockquote.tiktok-embed {
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: 100% !important;
+            min-width: 280px !important;
+            width: 100% !important;
         }
 
-        .gif-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background-color: #000;
-        }
-
-        .gif-placeholder {
+        .tiktok-placeholder {
             color: var(--text-sub);
             font-family: var(--font-display);
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-align: center;
-            padding: 10px;
+            padding: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: color 0.25s ease;
-        }
-
-        .exercise-card:hover .gif-placeholder {
-            color: var(--bunny-pink);
         }
     </style>
 </head>
@@ -412,8 +364,37 @@
     <script src="workout-data.js"></script>
 
     <script>
+        // Optional mapping object if you want to assign specific TikTok Video IDs to exercise names
+        const exerciseTikTokMap = {
+            // "squat": "7123456789012345678",
+            // "bench_press": "7123456789012345679"
+        };
+
+        function getTikTokEmbedHTML(exercise) {
+            const key = exercise.toLowerCase().replace(/[^a-z0-9]/g, '_');
+            const videoId = exerciseTikTokMap[key];
+
+            if (videoId) {
+                return `
+                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/video/${videoId}" data-video-id="${videoId}">
+                        <section></section>
+                    </blockquote>
+                `;
+            } else {
+                // Generates a fallback direct search button/container if no video ID is explicitly configured
+                const searchQuery = encodeURIComponent(exercise + " workout form");
+                return `
+                    <div class="tiktok-placeholder">
+                        TikTok Form Video<br>
+                        <a href="https://www.tiktok.com/search?q=${searchQuery}" target="_blank" rel="noopener noreferrer" style="color: var(--bunny-pink); text-decoration: underline; margin-top: 8px; display: inline-block;">
+                            Search "${exercise}" on TikTok
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
         function parseAndRender() {
-            // Read from global variable defined in workout-data.js
             if (!window.rawWorkoutCSV) {
                 console.error("workout-data.js loaded, but window.rawWorkoutCSV is undefined.");
                 return;
@@ -446,7 +427,6 @@
                     const reps = parts[4].trim();
                     const notes = parts[5].trim();
 
-                    const gifFile = exercise.toLowerCase().replace(/[^a-z0-9]/g, '_') + '.gif';
                     const isSpecialBlock = block.toLowerCase().includes('warm') || block.toLowerCase().includes('finish');
                     
                     let cardClass = 'exercise-card';
@@ -458,9 +438,18 @@
 
                     const card = document.createElement('div');
                     card.className = cardClass;
-                    card.onclick = function() {
+                    card.onclick = function(e) {
+                        // Prevent collapse when clicking links inside the card
+                        if (e.target.tagName === 'A') return;
+
                         this.classList.toggle('expanded');
+                        
+                        // Re-trigger TikTok embed script render upon expansion
+                        if (this.classList.contains('expanded') && window.tiktokEmbed) {
+                            window.tiktokEmbed.load();
+                        }
                     };
+
                     card.innerHTML = `
                         <div class="exercise-info">
                             <span class="${blockClass}">${block}</span>
@@ -468,13 +457,18 @@
                             <div class="exercise-meta">${sets} Sets × ${reps}</div>
                             <div class="exercise-notes">${notes}</div>
                         </div>
-                        <div class="gif-container">
-                            <img src="gifs/${gifFile}" alt="${exercise} Form GIF" onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\\'gif-placeholder\\'>Form GIF Placeholder<br>(${gifFile})</div>';">
+                        <div class="media-container">
+                            ${getTikTokEmbedHTML(exercise)}
                         </div>
                     `;
                     targetContainer.appendChild(card);
                 }
             });
+
+            // Initial load trigger for TikTok Embed JS library
+            if (window.tiktokEmbed) {
+                window.tiktokEmbed.load();
+            }
         }
 
         function switchRoutine(routineId, btn) {
